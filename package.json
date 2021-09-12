@@ -1,5 +1,5 @@
 {
-  "name": "cncjs-pendant-boilerplate",
+  "name": "cncjs-pendant-jogpad",
   "version": "0.1.0",
   "description": "A bare minimum example to develop a cncjs pendant.",
   "main": "./index.js",
@@ -7,7 +7,7 @@
     "node": ">=4"
   },
   "bin": {
-    "cncjs-pendant-boilerplate": "./bin/cncjs-pendant-boilerplate"
+    "cncjs-pendant-jogpad": "./bin/cncjs-pendant-jogpad"
   },
   "preferGlobal": true,
   "scripts": {
@@ -15,19 +15,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cncjs/cncjs-pendant-boilerplate.git"
+    "url": "git+https://github.com/cncjs/cncjs-pendant-jogpad.git"
   },
   "keywords": [
     "cncjs",
     "pendant",
-    "boilerplate"
+    "jogpad"
   ],
-  "author": "Cheton Wu <cheton@gmail.com>",
+  "author": "https://github.com/lirinar, Cheton Wu <cheton@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/cncjs/cncjs-pendant-boilerplate/issues"
+    "url": "https://github.com/lirinar/cncjs-pendant-jogpad/issues"
   },
-  "homepage": "https://github.com/cncjs/cncjs-pendant-boilerplate#readme",
+  "homepage": "https://github.com/lirinar/cncjs-pendant-jogpad#readme",
   "dependencies": {
     "commander": "^5.0.0-4",
     "inquirer": "^7.1.0",
@@ -35,6 +35,7 @@
     "lodash": "^4.17.15",
     "serialport": "^8.0.7",
     "socket.io-client": "^2.3.0",
-    "vorpal": "^1.12.0"
+    "vorpal": "^1.12.0",
+    "node-hid": "^1.2.0"
   }
 }
