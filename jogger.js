@@ -4,7 +4,7 @@ function Jogger(socket, options) {
     this.socket = socket;
     this.options = options;
     this.jogFeeds = [100, 500, 1000];
-    this.curFeeds = 1;
+    this.curFeed = 1;
     // jogStep in mm
     this.jogDistances = [0.1, 1, 10];
     this.curDist = 1;
@@ -14,20 +14,23 @@ Jogger.prototype = {}
 
 
 Jogger.prototype.changeDist = function (delta) {
-
+    let curDist = this.curDist + delta;
+    this.curDist = Math.max(0, Math.min(curDist, this.jogDistances.length - 1));
+    console.debug('distance',this.jogDistances[this.curDist], 'mm');
 }
 Jogger.prototype.changeFeed = function (delta) {
-    
+    let curFeed = this.curFeed + delta;
+    this.curFeed = Math.max(0, Math.min(curFeed, this.jogFeeds.length - 1));
+    console.debug('feed',this.jogFeeds[this.curFeed],'mm/min');
 }
 Jogger.prototype.gcode = function (code) {
     console.log(code);
     this.socket.emit('command', this.options.port, 'gcode', code);
 }
-
-Jogger.prototype.jogPool = function (socket, options) {
+Jogger.prototype.jogPool = function () {
     if (this.jog) {
         console.log(this.jog);
-        this.gcode(`$J=G91${this.jog.axis}${this.jog.dir * this.jogDistances[this.curDist]}F${this.jogFeeds[this.curFeeds]}`);
+        this.gcode(`$J=G91${this.jog.axis}${this.jog.dir * this.jogDistances[this.curDist]}F${this.jogFeeds[this.curFeed]}`);
     }
 }
 Jogger.prototype.jogStart = function (axis, dir) {
@@ -42,7 +45,7 @@ Jogger.prototype.jogEnd = function () {
 }
 Jogger.prototype.jogOneStep = function (axis, dir) {
     this.gcode("G91");
-    this.gcode(`G0 ${axis}${dir * this.jogDistances[this.curDist]}F${this.jogFeeds[this.curFeeds]}`);
+    this.gcode(`G0 ${axis}${dir * this.jogDistances[this.curDist]}F${this.jogFeeds[this.curFeed]}`);
     this.gcode("G90");
 }
 //  Jogger.prototype. park() { 
@@ -52,7 +55,7 @@ Jogger.prototype.jogOneStep = function (axis, dir) {
 // }
 Jogger.prototype.emit = function (command) {
     console.log(command);
-    socket.emit('command', options.port, command);
+    this.socket.emit('command', this.options.port, command);
 }
 Jogger.prototype.runmacro = function (macro) {
     console.log(macro);

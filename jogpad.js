@@ -28,22 +28,23 @@ function processKeys(keys,jogger) {
 }
 
 function onSerial(data, jogger) {
+    console.log(data);
     if (data.startsWith('ok'))
         jogger.jogPool();
 }
 
 module.exports = function (socket, options) {
     try {
+        let jogger = new Jogger.Jogger(socket, options);
 
         socket.on('serialport:read', function (data) {
-            onSerial(data, socket, options);
+            onSerial(data, jogger);
         });
 
         console.log(`opening device '${keyboard.deviceID}'`);
         const device = new HID.HID(...keyboard.deviceID);
         console.debug(device);
 
-        let jogger = new Jogger.Jogger(socket, options);
         device.on("data", function (data) {
             processKeys(parseKeys(data), jogger);
         });
